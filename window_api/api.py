@@ -1,5 +1,6 @@
 import ctypes
 from ctypes import wintypes
+from structure.process_entry import PROCESSENTRY32
 from .wrapper import WindowAPI
 
 winapi_kernel32 = WindowAPI("kernel32")
@@ -53,7 +54,37 @@ winapi_kernel32.bind(
 )
 
 winapi_kernel32.bind(
-    "WaitForSingleObject",
-    [wintypes.HMODULE, wintypes.DWORD],
-    wintypes.DWORD
+    "FreeLibrary",
+    [wintypes.HMODULE],
+    ctypes.c_bool
+)
+
+winapi_kernel32.bind(
+    "CreateToolhelp32Snapshot",
+    [wintypes.DWORD, wintypes.DWORD],
+    wintypes.HANDLE
+)
+
+winapi_kernel32.bind(
+    "Process32First",
+    [wintypes.HANDLE, ctypes.POINTER(PROCESSENTRY32)],
+    wintypes.BOOL
+)
+
+winapi_kernel32.bind(
+    "Process32Next",
+    [wintypes.HANDLE, ctypes.POINTER(PROCESSENTRY32)],
+    wintypes.BOOL
+)
+
+winapi_kernel32.bind(
+    "CloseHandle",
+    [wintypes.HANDLE],
+    wintypes.BOOL
+)
+
+winapi_kernel32.bind(
+    "VirtualFreeEx",
+    [wintypes.HANDLE, wintypes.LPVOID, ctypes.c_size_t, wintypes.DWORD],
+    wintypes.BOOL
 )

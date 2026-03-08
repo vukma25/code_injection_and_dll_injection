@@ -26,7 +26,8 @@ def implement_code_injector():
 
 def implement_dll_injector():
     try:
-        dll_injector = DllInjector(process_name=args.process_name, path=args.path)
+        dll_injector = DllInjector(
+            process_name=args.process_name, path=args.path)
         dll_injector.execute()
     except Exception as error:
         print(error)
@@ -38,3 +39,5 @@ if __name__ == "__main__":
         implement_dll_injector()
     else:
         print("[*] You need provide value for -path or -server argument")
+
+
